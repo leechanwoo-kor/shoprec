@@ -1,0 +1,126 @@
+# ======================================
+# Python 관련 무시 항목
+# ======================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 가상환경 폴더(venv, .venv 등), pipenv, poetry
+venv/
+.venv/
+env/
+ENV/
+Pipfile.lock
+poetry.lock
+
+# jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# ======================================
+# 운영체제(OS)별 무시 항목
+# ======================================
+# macOS
+.DS_Store
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ======================================
+# IDE/Editor 설정 파일
+# ======================================
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+
+# JetBrains
+*.idea/
+*.ipr
+*.iws
+out/
+
+# ======================================
+# Log, Temp files
+# ======================================
+*.log
+*.tmp
+*.temp
+*.pid
+*.gz
+
+# ======================================
+# Build/Distribution 파일
+# ======================================
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ======================================
+# Python packaging
+# ======================================
+*.egg
+*.wheel
+
+# ======================================
+# 환경 파일, credentials
+# ======================================
+.env
+.secret
+*credentials*.json
+keys/
+
+# ======================================
+# (선택) 데이터 파일
+# ======================================
+# 실제로는 대용량 raw/processed 데이터 등도 Git에서 제외.
+# 필요 시 .gitignore에 명시하거나, S3/HDFS 등 외부 스토리지 이용 권장.
+data/raw/
+data/processed/
+data/external/
+
+# 만약 작은 샘플 테스트 데이터를 관리하고 싶다면 예외 처리(!)로 지정할 수 있음
+# !data/raw/sample_*.csv
+
+# ======================================
+# 모델 체크포인트, 캐시
+# ======================================
+checkpoints/
+models/
+*.ckpt
+*.h5
+*.pt
+*.pth
+*.pb
+
+# PyTorch Lightning, TF 등
+lightning_logs/
+wandb/
+tfhub_modules/
+tfhub_model/
+*.tflite
+
+# ======================================
+# Docker
+# ======================================
+*.env
+Dockerfile~
+docker-compose.override.yml
+
+# ======================================
+# Airflow, Airflow DB/Logs
+# ======================================
+airflow.db
+airflow.cfg
+logs/

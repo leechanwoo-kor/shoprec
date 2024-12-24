@@ -1,0 +1,4 @@
+# 예시: 매일 새벽 2시에 전처리 & 학습 & 추론
+0 2 * * * /home/ubuntu/ShopRec/scripts/run_preprocess.sh
+30 2 * * * /home/ubuntu/ShopRec/scripts/run_train.sh
+0 3 * * * /home/ubuntu/ShopRec/scripts/run_infer.sh

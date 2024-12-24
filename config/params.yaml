@@ -1,0 +1,10 @@
+# 모델 하이퍼파라미터, 경로 등
+model:
+  embed_dim: 32
+  num_users: 100000
+  num_items: 500000
+
+training:
+  epochs: 5
+  batch_size: 256
+  lr: 0.001
