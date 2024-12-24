@@ -90,7 +90,7 @@ def main(input_path, output_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_path", type=str, default="../data/raw/event_log.csv")
-    parser.add_argument("--output_path", type=str, default="../data/processed/preprocessed_events.csv")
+    parser.add_argument("--output_path", type=str, default="../data/processed/event_log.parquet")
     args = parser.parse_args()
 
     main(args.input_path, args.output_path)
