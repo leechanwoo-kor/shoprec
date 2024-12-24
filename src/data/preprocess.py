@@ -85,6 +85,7 @@ def main(input_path, output_dir):
 
     # 11. 저장
     #     CSV or Parquet 포맷. 예: CSV로 저장
+    output_dir = Path(output_dir)
     df_final.to_parquet(output_dir / "event_log.parquet", index=False)
     print(f"[INFO] Preprocessed dataset saved to {output_dir} - shape={df_final.shape}")
 
