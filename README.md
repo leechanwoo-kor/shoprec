@@ -7,7 +7,7 @@
 **디렉토리 구조**
 
 - data/
-  - raw/, processed/, external/ ...
+  - raw/, processed/, ...
 - src/
   - data/, models/, training/, inference/, evaluation/, utils/ ...
 - notebooks/
@@ -17,8 +17,8 @@
 
 **개발 환경**
 
-- Python 3.9
-- PyTorch 2.x / TensorFlow 2.x (택1)
+- Python 3.11
+- PyTorch 2.5.1
 - 기타 주요 라이브러리는 `requirements.txt` 참고
 
 **사용 방법**
