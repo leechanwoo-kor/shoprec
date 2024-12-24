@@ -1,4 +1,5 @@
 # src/data/preprocess.py
+from pathlib import Path
 import pandas as pd
 import json
 import argparse
@@ -87,10 +88,30 @@ def main(input_path, output_path):
     df_final.to_parquet(output_path, index=False)
     print(f"[INFO] Preprocessed dataset saved to {output_path} - shape={df_final.shape}")
 
+    # train/test split 추가
+    from sklearn.model_selection import train_test_split
+    
+    train_df, test_df = train_test_split(
+        df_final, 
+        test_size=0.2,  # 20%를 테스트셋으로
+        random_state=42  # 재현성을 위해 시드 고정
+    )
+    
+    # 저장 경로 준비
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # parquet 형식으로 저장
+    train_df.to_parquet(output_dir / "train_events.parquet", index=False)
+    test_df.to_parquet(output_dir / "test_events.parquet", index=False)
+    
+    print(f"[INFO] Train dataset saved. shape={train_df.shape}")
+    print(f"[INFO] Test dataset saved. shape={test_df.shape}")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input_path", type=str, default="../data/raw/event_log.csv")
-    parser.add_argument("--output_path", type=str, default="../data/processed/event_log.parquet")
+    parser.add_argument("--input_path", type=str, default="data/raw/event_log.csv")
+    parser.add_argument("--output_path", type=str, default="data/processed/event_log.parquet")
     args = parser.parse_args()
 
     main(args.input_path, args.output_path)
