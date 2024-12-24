@@ -120,18 +120,18 @@ if __name__ == "__main__":
     from src.training.trainer import TwoTowerModel
 
     # 1) test_df 로드 (예: test split만 추출해 parquet or csv 준비)
-    test_df = pd.read_parquet("../data/processed/test_events.parquet")
+    test_df = pd.read_parquet("data/processed/test_events.parquet")
 
     # 2) 인코더 로딩
-    user_encoder = joblib.load("../models/user_encoder.pkl")
-    item_encoder = joblib.load("../models/item_encoder.pkl")
+    user_encoder = joblib.load("src/models/user_encoder.pkl")
+    item_encoder = joblib.load("src/models/item_encoder.pkl")
     
     # 3) 모델 객체 생성 & 가중치 로드
     num_users = len(user_encoder.classes_)
     num_items = len(item_encoder.classes_)
     model = TwoTowerModel(num_users, num_items, embed_dim=32)
 
-    model_path = "../models/two_tower.pt"
+    model_path = "src/models/two_tower.pt"
     state_dict = torch.load(model_path)
     model.load_state_dict(state_dict)
     model.eval()
