@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 import torch
+import joblib
 from torch.utils.data import Dataset, DataLoader
 from sklearn.preprocessing import LabelEncoder
 
@@ -88,7 +89,10 @@ if __name__ == "__main__":
     valid_df = df_all[~msk]
     
     model, user_enc, item_enc = train_model(train_df, valid_df)
-    
-    # 모델 저장
+
+    # 모델 파라미터 저장
     torch.save(model.state_dict(), "../models/two_tower.pt")
-    # 인코더는 별도 피클이나 joblib로 저장
+
+    # 인코더(라벨인코더) 저장
+    joblib.dump(user_enc, "../models/user_encoder.pkl")
+    joblib.dump(item_enc, "../models/item_encoder.pkl")
