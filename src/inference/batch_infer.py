@@ -60,8 +60,8 @@ if __name__ == "__main__":
     #   trainer.py 실행 직후, user_encoder / item_encoder를 joblib 등으로 따로 저장했을 것으로 가정
     #   예: joblib.dump(user_enc, "../models/user_encoder.pkl")
     #       joblib.dump(item_enc, "../models/item_encoder.pkl")
-    user_encoder_path = Path("../models/user_encoder.pkl")
-    item_encoder_path = Path("../models/item_encoder.pkl")
+    user_encoder_path = Path("src/models/user_encoder.pkl")
+    item_encoder_path = Path("src/models/item_encoder.pkl")
     user_encoder = joblib.load(user_encoder_path)
     item_encoder = joblib.load(item_encoder_path)
 
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     model = TwoTowerModel(num_users, num_items, embed_dim=32)
 
     # (2-3) 학습된 가중치 로드
-    model_path = Path("../models/two_tower.pt")
+    model_path = Path("src/models/two_tower.pt")
     state_dict = torch.load(model_path)
     model.load_state_dict(state_dict)
     model.eval()
@@ -93,5 +93,5 @@ if __name__ == "__main__":
             data_for_csv.append([u_id, i_id, rank])
     
     df_result = pd.DataFrame(data_for_csv, columns=["user_id", "item_id", "rank"])
-    df_result.to_csv("../data/processed/batch_topk.csv", index=False)
-    print("Batch inference done. Saved to ../data/processed/batch_topk.csv")
+    df_result.to_csv("data/processed/batch_topk.csv", index=False)
+    print("Batch inference done. Saved to data/processed/batch_topk.csv")

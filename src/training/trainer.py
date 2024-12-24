@@ -82,7 +82,7 @@ def train_model(train_df, valid_df):
 
 if __name__ == "__main__":
     # (예) load train_df, valid_df
-    df_all = pd.read_parquet("../data/processed/event_log.parquet")
+    df_all = pd.read_parquet("data/processed/event_log.parquet")
     # 분할 로직 예시 (임의 80:20 split)
     msk = np.random.rand(len(df_all)) < 0.8
     train_df = df_all[msk]
@@ -91,8 +91,8 @@ if __name__ == "__main__":
     model, user_enc, item_enc = train_model(train_df, valid_df)
 
     # 모델 파라미터 저장
-    torch.save(model.state_dict(), "../models/two_tower.pt")
+    torch.save(model.state_dict(), "src/models/two_tower.pt")
 
     # 인코더(라벨인코더) 저장
-    joblib.dump(user_enc, "../models/user_encoder.pkl")
-    joblib.dump(item_enc, "../models/item_encoder.pkl")
+    joblib.dump(user_enc, "src/models/user_encoder.pkl")
+    joblib.dump(item_enc, "src/models/item_encoder.pkl")

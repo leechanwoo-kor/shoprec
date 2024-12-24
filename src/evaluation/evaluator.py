@@ -39,7 +39,7 @@ def ndcg_at_k(recommended_items, ground_truth_items, k=10):
 def evaluate_recall_ndcg(model, test_df, user_encoder, item_encoder, K=10):
     """
     model: 학습된 TwoTower 모델 (eval 모드)
-    test_df: (user_id, item_id, label) 형태의 DataFrame (test split)
+    test_df: (user_id, product_id, label) 형태의 DataFrame (test split)
     user_encoder, item_encoder: 학습 시 사용했던 LabelEncoder
     K: top-K
     """
@@ -47,11 +47,11 @@ def evaluate_recall_ndcg(model, test_df, user_encoder, item_encoder, K=10):
     model.eval()
 
     # 1) 유저별 실제 정답 아이템(라벨=1) 모으기
-    #   user_id를 기준으로 groupby → label=1인 item_id들을 set으로 저장
+    #   user_id를 기준으로 groupby → label=1인 product_id들을 set으로 저장
     user2trueitems = defaultdict(set)
     for row in test_df.itertuples(index=False):
         u_id = getattr(row, "user_id")
-        i_id = getattr(row, "item_id")
+        i_id = getattr(row, "product_id")
         label = getattr(row, "label")
         if label == 1:
             user2trueitems[u_id].add(i_id)
@@ -61,12 +61,12 @@ def evaluate_recall_ndcg(model, test_df, user_encoder, item_encoder, K=10):
     num_items = len(item_encoder.classes_)
     with torch.no_grad():
         # user_idx: 0 .. num_users-1
-        # item_idx: 0 .. num_items-1
+        # product_idx: 0 .. num_items-1
         user_idx_tensor = torch.arange(num_users)
-        item_idx_tensor = torch.arange(num_items)
+        product_idx_tensor = torch.arange(num_items)
 
         user_emb = model.user_embedding(user_idx_tensor)  # (num_users, embed_dim)
-        item_emb = model.item_embedding(item_idx_tensor)  # (num_items, embed_dim)
+        item_emb = model.item_embedding(product_idx_tensor)  # (num_items, embed_dim)
 
     # 3) 전수 dot-product → (num_users x num_items) 점수 행렬
     #    (대규모 시 ANN 등 고려)
@@ -94,16 +94,16 @@ def evaluate_recall_ndcg(model, test_df, user_encoder, item_encoder, K=10):
         # Top-K 아이템 인덱스
         topk_idx = torch.topk(user_scores, K).indices.tolist()
         # 인덱스→아이디 역인코딩
-        topk_item_ids = item_encoder.inverse_transform(topk_idx)
+        topk_product_ids = item_encoder.inverse_transform(topk_idx)
         
         # --- Recall@K ---
         # ground_truth와 교집합
-        hits = len(set(topk_item_ids).intersection(ground_truth))
+        hits = len(set(topk_product_ids).intersection(ground_truth))
         recall_k = hits / len(ground_truth)  # 정답 아이템 중 몇 개 맞췄나
         sum_recall += recall_k
 
         # --- NDCG@K ---
-        ndcg_k = ndcg_at_k(topk_item_ids, ground_truth, K)
+        ndcg_k = ndcg_at_k(topk_product_ids, ground_truth, K)
         sum_ndcg += ndcg_k
 
     # 5) 평균값 계산
