@@ -84,7 +84,7 @@ def main(input_path, output_path):
 
     # 11. 저장
     #     CSV or Parquet 포맷. 예: CSV로 저장
-    df_final.to_csv(output_path, index=False, encoding="utf-8-sig")
+    df_final.to_parquet(output_path, index=False)
     print(f"[INFO] Preprocessed dataset saved to {output_path} - shape={df_final.shape}")
 
 if __name__ == "__main__":
