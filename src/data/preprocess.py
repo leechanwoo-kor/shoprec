@@ -15,7 +15,7 @@ def parse_json_column(json_str):
     except:
         return {}
 
-def main(input_path, output_path):
+def main(input_path, output_dir):
     # 1. 원본 데이터 로드
     df = pd.read_csv(input_path)
     print(f"[INFO] Raw data loaded. shape = {df.shape}")
@@ -85,8 +85,8 @@ def main(input_path, output_path):
 
     # 11. 저장
     #     CSV or Parquet 포맷. 예: CSV로 저장
-    df_final.to_parquet(output_path, index=False)
-    print(f"[INFO] Preprocessed dataset saved to {output_path} - shape={df_final.shape}")
+    df_final.to_parquet(output_dir, index=False)
+    print(f"[INFO] Preprocessed dataset saved to {output_dir} - shape={df_final.shape}")
 
     # train/test split 추가
     from sklearn.model_selection import train_test_split
@@ -111,7 +111,7 @@ def main(input_path, output_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_path", type=str, default="data/raw/event_log.csv")
-    parser.add_argument("--output_path", type=str, default="data/processed/event_log.parquet")
+    parser.add_argument("--output_dir", type=str, default="data/processed")
     args = parser.parse_args()
 
-    main(args.input_path, args.output_path)
+    main(args.input_path, args.output_dir)
