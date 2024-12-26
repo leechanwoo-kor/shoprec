@@ -27,3 +27,5 @@
 2. `bash scripts/run_preprocess.sh` : 데이터 전처리
 3. `bash scripts/run_train.sh` : 모델 학습
 4. `bash scripts/run_infer.sh` : 배치 추론 결과 생성
+
+- set PYTHONPATH=. && python
