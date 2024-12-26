@@ -132,7 +132,7 @@ if __name__ == "__main__":
     model = TwoTowerModel(num_users, num_items, embed_dim=32)
 
     model_path = "src/models/two_tower.pt"
-    state_dict = torch.load(model_path)
+    state_dict = torch.load(model_path, weights_only=True)
     model.load_state_dict(state_dict)
     model.eval()
 
