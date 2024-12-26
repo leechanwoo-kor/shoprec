@@ -131,7 +131,8 @@ if __name__ == "__main__":
     num_items = len(item_encoder.classes_)
     model = TwoTowerModel(num_users, num_items, embed_dim=32)
 
-    model_path = "src/models/two_tower.pt"
+    # model_path = "src/models/two_tower.pt"
+    model_path = "src/models/best_model.pt"
     state_dict = torch.load(model_path, weights_only=True)
     model.load_state_dict(state_dict)
     model.eval()
