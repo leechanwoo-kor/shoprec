@@ -100,13 +100,10 @@ def train_model(train_df, valid_df, epochs=20, patience=3):
 
         # === (3) Early Stopping Check ===
         if avg_val_loss < best_val_loss:
-            # Validation Loss가 개선되었으면 갱신 & 모델 저장
             best_val_loss = avg_val_loss
             no_improvement = 0
-            # 필요하다면 모델 가중치 임시 저장 (예: "best_model.pt")
-            # torch.save(model.state_dict(), "best_model.pt")
+            torch.save(model.state_dict(), "src/models/best_model.pt")
         else:
-            # 개선이 없으면 카운트 증가
             no_improvement += 1
             if no_improvement >= patience:
                 print(f"Early stopping triggered at epoch {epoch+1}")
