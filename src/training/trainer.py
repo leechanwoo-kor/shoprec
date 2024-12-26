@@ -60,6 +60,9 @@ def train_model(train_df, valid_df, epochs=20, patience=3):
     criterion = torch.nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
+    best_val_loss = float("inf")  # 현재까지의 최소 Validation Loss
+    no_improvement = 0            # 개선되지 않은 epoch 누적 수
+
     for epoch in range(epochs):
         # === (1) TRAIN PHASE ===
         model.train()
